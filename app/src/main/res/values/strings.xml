@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Cryptothon</string>
+    <string name="wrong_pwd_msg">Wrong password, try again.</string>
+    <string name="max_devices_reached">Max number of devices already registered. </string>
+    <string name="device">Device</string>
+    <string name="unknown_error">Unknown Error, please contact admin via your PL.</string>
+    <string name="tap_to_start_the_game">Tap to start the game.</string>
+    <string name="start">Start</string>
+    <string name="password">Password</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="login">Login</string>
+    <string name="tap_to_login_into_game">Tap to login into game.</string>
+    <string name="unlock_hint">Unlock Hint</string>
+    <string name="submit">Submit</string>
+    <string name="team_name">Team Name</string>
+    <string name="answer">Answer (without space)</string>
+    <string name="hint">Hint</string>
+    <string name="question">Question</string>
+    <string name="_00_00_00">00:00:00</string>
+    <string name="cryptothon_title">Cryptothon Title</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="refresh">Refresh</string>
+    <string name="restart">Restart</string>
+    <string name="error">Error, check internet stability.</string>
+    <string name="internet_notavailable">Internet unstable / unavailable</string>
+</resources>

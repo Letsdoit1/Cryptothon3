@@ -1,0 +1,9 @@
+22:24:16.935 [NamespaceSystem-akka.actor.default-dispatcher-5] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+22:24:17.193 [main] INFO com.firebase.server.forge.App$ - Listening at 127.0.0.1:9000
+22:24:21.507 [NamespaceSystem-akka.actor.default-dispatcher-5] INFO com.firebase.core.namespace.NamespaceActor - cryptothon2-default-rtdb successfully activated FBKV (SurveyIdle(0)) wait: 232ms, init: 0ms
+22:24:22.647 [FirebaseWorkerPool-1-2] WARN com.firebase.core.persistence.backend.dummy.EmulatorMetadataPersistence - Multiple projectIds are not recommended in single project mode. Requested 
+namespace cryptothon2, but the emulator is configured for cryptothon2-default-rtdb. To 
+opt-out of single project mode add/set the singleProjectMode: false property in 
+the firebase.json emulators config. 
+22:24:22.654 [NamespaceSystem-akka.actor.default-dispatcher-6] INFO com.firebase.core.namespace.NamespaceActor - cryptothon2 successfully activated FBKV (SurveyIdle(0)) wait: 2ms, init: 0ms
+22:24:29.446 [NamespaceSystem-blocking-namespace-operation-dispatcher-12] INFO com.firebase.core.namespace.StateManager - Namespace cryptothon2-default-rtdb status Active to Active

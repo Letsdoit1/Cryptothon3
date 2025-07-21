@@ -1,0 +1,50 @@
+{"devices":{"689e747d30942ba7":"AFSXQ"},"master":{
+	"blockIntervals":
+	[
+		{"end":"1200","start":"0930"},
+		{"end":"1600","start":"1230"}
+	],
+	"availableHints": 3
+	"endEventTime":"2024-07-19T13:00:00+05:30",
+	"eventStartTime":"2024-07-18T22:20:00+05:30",
+	"questionDetails":[
+		null,
+	{"answer":"Answer1","hint":"Hint 1","questionText":"Question 1 text"},
+	{"answer":"Ans-2","hint":"Hint 2","questionText":"Question 2 text"},
+	{"answer":"Ans-3","hint":"Hint 3","questionText":"Question 3 text"},{"answer":"Answer4","hint":"Hint 4","questionText":"Question 4 text"},{"answer":"Ans-5","hint":"Hint 5","questionText":"Question 5 text"},{"answer":"Answer6","hint":"Hint 6","questionText":"Question 6 text"},{"answer":"Ans-7","hint":"Hint 7","questionText":"Question 7 text"},{"answer":"Answer8","hint":"Hint 8","questionText":"Question 8 text"},{"answer":"Ans-9","hint":"Hint 9","questionText":"Question 9 text"},{"answer":"Answer10","hint":"Hint 10","questionText":"Question 10 text"}],"questionReleaseInterval":360,"questionReleaseTime":"2024-07-18T22:20:00+05:30","scoreRules":{"hintScale":0.25,"successfulScale":1,"unsuccessfulScale":0.5,"value":0}},"teams":{
+		"AFSXQ":
+		{
+			"calculatedLevel":5,
+			"lastSolvedInterval":2259741,
+			"registeredDevices":
+			{"Device1":"689e747d30942ba7"},
+			"scoreCard":
+			[
+			null,
+			{
+				"deviceId":"689e747d30942ba7",
+				"hintUsed":false,
+				"isSuccess":false,
+				"time":"2024-07-17T16:40:00.000Z"
+			},
+			{
+				"deviceId":"689e747d30942ba7",
+				"hintUsed":false,
+				"isSuccess":false,
+				"time":"2024-07-17T16:50:00.000Z"
+			},
+			{
+				"deviceId":"689e747d30942ba7",
+				"hintUsed":false,
+				"isSuccess":false,
+				"time":"2024-07-17T17:00:00.000Z"
+			},
+			{
+				"deviceId":"689e747d30942ba7",
+				"hintUsed":false,
+				"isSuccess":true,
+				"time":"2024-07-17T17:07:39.741Z"
+			}],
+			"teamName":"Dynamite",
+			"teamScore":4
+		},"AJHEC":{"teamName":"Baggers"},"AQAIE":{"teamName":"Patriots"},"ASNLK":{"teamName":"Contenders"},"BHZGI":{"teamName":"Drifters"},"BORSG":{"teamName":"No Spares"},"BXUFC":{"teamName":"Mastermind"},"BYLLT":{"teamName":"Upholders"},"CAUSI":{"teamName":"MVPs"},"CCLVA":{"teamName":"Vaporizers"},"CDHNU":{"teamName":"Contagion"},"CHMGR":{"teamName":"Howlers"},"CMNFL":{"teamName":"Exterminators"},"CNHNN":{"teamName":"Inventors"},"CSPQG":{"teamName":"Whiz-Bang"},"CXQTC":{"teamName":"Bosses"},"CXYFL":{"teamName":"Dauntless"},"DCFXV":{"teamName":"Groundbreakers"},"DCLEE":{"teamName":"The Chosen Ones"},"DGJRR":{"teamName":"Avant-Garde"},"DHRSV":{"teamName":"Vanguards"},"DLBIH":{"teamName":"Aces"},"DLVDR":{"teamName":"Stupendous"},"DTWNL":{"teamName":"Fantastics"},"DXDBQ":{"teamName":"The Interference"},"DXROY":{"teamName":"Heart Warmers"},"EBZWT":{"teamName":"Negotiators"},"ECVLG":{"teamName":"Basketcases"},"EISLU":{"teamName":"The Shakedown"},"ELVQT":{"teamName":"Enforcers"},"EMGZG":{"teamName":"Strikers"},"EMZNY":{"teamName":"Mercury"},"EPWTQ":{"teamName":"Bed Posts"},"ESGWW":{"teamName":"The Rush"},"EUUDS":{"teamName":"Ballbarians"},"EVOIP":{"teamName":"Defenders"},"EZIOQ":{"teamName":"Slam Dunks"},"FCGTF":{"teamName":"Gladiators"},"FDURZ":{"teamName":"Scorpions"},"FDYRS":{"teamName":"Hazards"},"FLFWB":{"teamName":"Devils"},"FMNVH":{"teamName":"Indispensibles"},"FPTNX":{"teamName":"Vipers"},"FVWBZ":{"teamName":"Disruptors"},"FWIVR":{"teamName":"Rebounders"},"FZPPF":{"teamName":"Bricklayers"},"FZZPZ":{"teamName":"Outlaws"},"GGGAD":{"teamName":"Rattlesnakes"},"GIFQE":{"teamName":"No-Hitters"},"GKKGO":{"teamName":"Strikers"},"GMBXO":{"teamName":"Hammerheads"},"GNEIU":{"teamName":"Great Whites"},"GNJLO":{"teamName":"King Pins"},"GOVOD":{"teamName":"Allies"},"HBSRH":{"teamName":"Finishers"},"HCEBT":{"teamName":"Immortals"},"HCVEP":{"teamName":"Innovators"},"HKNOI":{"teamName":"Live Wire"},"HNZHX":{"teamName":"Crossovers"},"HSMYR":{"teamName":"Sluggers"},"HUJOT":{"teamName":"Bandits"},"HVWDB":{"teamName":"Collision Course"},"HWAGS":{"teamName":"Turkeys"},"ICTWY":{"teamName":"Spiked Punch"},"IIEBM":{"teamName":"Revolters"},"IJAVF":{"teamName":"Ball Hogs"},"ILCQV":{"teamName":"Spark Plugs"},"IMGDY":{"teamName":"Gridirons"},"IVRZE":{"teamName":"Travelers"},"IZRWD":{"teamName":"Split Enders"},"JARRN":{"teamName":"Originators"},"JCYXB":{"teamName":"Hot Shots"},"JDZMK":{"teamName":"In A Pickle"},"JGBKF":{"teamName":"Conquerors"},"JNWIP":{"teamName":"Finger Grips"},"JUHQX":{"teamName":"Deuces"},"KBDSC":{"teamName":"Hail Marys"},"KCOBC":{"teamName":"Row Z"},"KHNWE":{"teamName":"Boomers"},"KKMSU":{"teamName":"Kryptonite"},"KOJNC":{"teamName":"Renegades"},"KVACH":{"teamName":"Strivers"},"KVJVZ":{"teamName":"The Fortress"},"KWIRQ":{"teamName":"The Sugar Bowl"},"KXPMB":{"teamName":"Supremes"},"LBNNJ":{"teamName":"Atomic Bombs"},"LGETW":{"teamName":"No Mercy"},"LLHXA":{"teamName":"Deadly Exclusives"},"LROBL":{"teamName":"The Blitz"},"LSACI":{"teamName":"Defenders"},"LTHQA":{"teamName":"Fearless"},"LUFFT":{"teamName":"Wolf Pack"},"LWMEZ":{"teamName":"Moon Shooters"},"MAENY":{"teamName":"Closers"},"MCCZG":{"teamName":"Screamers"},"MEHZH":{"teamName":"Unbeaten"},"MFBLI":{"teamName":"Synergy"},"MQNLU":{"teamName":"Antiheroes"},"NNDJQ":{"teamName":"Clean Sheets"},"NQHWF":{"teamName":"Grass Stains"},"NUAQP":{"teamName":"The Game Plan"},"NUTYW":{"teamName":"Hat Tricks"},"NVSLC":{"teamName":"Booters"},"OHCFU":{"teamName":"Shock Cavalry"},"OIZIO":{"teamName":"The Heat Wave"},"OLGBC":{"teamName":"Basket Hounds"},"OPNPM":{"teamName":"Globetrotters"},"OWZQA":{"teamName":"Punters"},"OXSHL":{"teamName":"Legends"},"PBNRT":{"teamName":"Crocodiles"},"PBTIL":{"teamName":"Nihilists"},"PHYDI":{"teamName":"Poison"},"PJDWD":{"teamName":"Warfare"},"PKPBG":{"teamName":"High Fliers"},"PMIDK":{"teamName":"Incognito Mode"},"PNKZL":{"teamName":"Vampire Bats"},"PNSWC":{"teamName":"Comebackers"},"POHIK":{"teamName":"Cowboys"},"PPBMR":{"teamName":"Lemon Drops"},"PRUBD":{"teamName":"Menaces"},"PSFJV":{"teamName":"The Benchwarmers"},"PSMWL":{"teamName":"Chargers"},"PUBOO":{"teamName":"Iconoclasts"},"PWDFB":{"teamName":"Trailblazers"},"PXGHW":{"teamName":"Thunders"},"PYNLL":{"teamName":"Minnows"},"QFIHX":{"teamName":"Boilermakers"},"QRMEW":{"teamName":"Back Alleys"},"QUJNY":{"teamName":"Marvelous"},"QWDBS":{"teamName":"Dynamos"},"QXACX":{"teamName":"Poison Ivy"},"RALZZ":{"teamName":"Class Acts"},"RAPYR":{"teamName":"Bandits"},"RDJRK":{"teamName":"Untouchables"},"REQLA":{"teamName":"Rush Hour"},"RKXLS":{"teamName":"Unbreakables"},"RLVBD":{"teamName":"Troublemakers"},"RMLDN":{"teamName":"Football Heads"},"RWVWY":{"teamName":"Nothing But Net"},"RZAXP":{"teamName":"Three-Pointers"},"SDWOM":{"teamName":"Ultimate"},"SIOXP":{"teamName":"Hoop Dreams"},"SPVIG":{"teamName":"Greek Fire"},"SQHVZ":{"teamName":"Rapscallions"},"SRHAS":{"teamName":"Cyanide"},"SSVWA":{"teamName":"Wunderkinds"},"SWKLL":{"teamName":"Dirt Devils"},"SWNUQ":{"teamName":"Prodigies"},"TEPRF":{"teamName":"Virtuosos"},"TFOBJ":{"teamName":"Agitators"},"TINDA":{"teamName":"Vigilantes"},"TLRRT":{"teamName":"Magnificent"},"TOOWL":{"teamName":"Leatherheads"},"TWFNC":{"teamName":"Hurt Lockers"},"TWYRM":{"teamName":"Worldies"},"TZQTJ":{"teamName":"Champions"},"UEJHN":{"teamName":"Tiki-takas"},"UFGAU":{"teamName":"Synchronizers"},"UHPKC":{"teamName":"Dreamers"},"UMGRR":{"teamName":"Masters"},"UYXNX":{"teamName":"Antagonists"},"VBKJM":{"teamName":"Stingrays"},"VBKPK":{"teamName":"Troubleshooters"},"VFEXG":{"teamName":"Alley Oops"},"VHZEU":{"teamName":"Misfits"},"VJWUJ":{"teamName":"Razorbacks"},"VLJCH":{"teamName":"Flyers"},"VRCTP":{"teamName":"Commanders"},"VXXNO":{"teamName":"Alpha"},"VZBVV":{"teamName":"Power House"},"WCDOD":{"teamName":"Yellow Cards"},"WKVHY":{"teamName":"Tremendous"},"WQBBC":{"teamName":"First-Class"},"WQKNN":{"teamName":"Lucky Strike"},"WRIOW":{"teamName":"Punters"},"WWRNJ":{"teamName":"Vanquishers"},"WYCAO":{"teamName":"Brute Force"},"XCDXM":{"teamName":"Bowler Coaster"},"XCLWZ":{"teamName":"Explorers"},"XGBYW":{"teamName":"Sleepers"},"XJZBP":{"teamName":"Grizzlies"},"XKSFE":{"teamName":"Hustlers"},"XMAKB":{"teamName":"Initiators"},"XNQCL":{"teamName":"Black Mambas"},"XOKFL":{"teamName":"Goal Posters"},"YEHQM":{"teamName":"Kickstarters"},"YHXNW":{"teamName":"The Pig Skin"},"YIGYX":{"teamName":"Lethal Weapons"},"YPKYA":{"teamName":"Hot Corners"},"YPRHM":{"teamName":"Trappers"},"YRMTN":{"teamName":"Three Baggers"},"YYHRV":{"teamName":"Genesis"},"ZCBRJ":{"teamName":"Fire Starters"},"ZJRAU":{"teamName":"Trouble"},"ZKVKW":{"teamName":"Worm Burners"},"ZQOFT":{"teamName":"Superlatives"},"ZQVEY":{"teamName":"Woodworkers"},"ZUEZE":{"teamName":"Meteors"},"ZVCTF":{"teamName":"Rogues"},"ZZNUO":{"teamName":"Workaholics"}}}
