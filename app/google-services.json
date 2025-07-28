@@ -1,14 +1,13 @@
 {
   "project_info": {
-    "project_number": "396085722162",
-    "firebase_url": "https://cryptothon3-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "cryptothon3",
-    "storage_bucket": "cryptothon3.firebasestorage.app"
+    "project_number": "1034390078434",
+    "project_id": "cryptothon3-76e1c",
+    "storage_bucket": "cryptothon3-76e1c.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:396085722162:android:88f1655b95281f30f1102b",
+        "mobilesdk_app_id": "1:1034390078434:android:0b81791590819a05a02fbb",
         "android_client_info": {
           "package_name": "com.event.cryptothon3"
         }
@@ -16,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyACyV-lJL_iag-6VUrMpnff4W6yrb1pm2w"
+          "current_key": "AIzaSyBc3hDJxPKgnkpm8gRyygR5ks-yNZnmDQU"
         }
       ],
       "services": {
