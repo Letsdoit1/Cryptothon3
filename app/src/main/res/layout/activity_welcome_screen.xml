@@ -18,8 +18,8 @@
 
     <FrameLayout
         android:id="@+id/gifOverlay"
-        android:layout_width="400dp"
-        android:layout_height="920dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
