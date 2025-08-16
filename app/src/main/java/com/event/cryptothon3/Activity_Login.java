@@ -5,7 +5,6 @@ import static com.event.cryptothon3.NetworkChecker.isNetworkAvailable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -30,7 +29,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
-
 import com.event.cryptothon3.models.RegistrationDetails;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -81,7 +79,7 @@ public class Activity_Login extends AppCompatActivity {
         ImageButton btnLogin = findViewById(R.id.btnLogin);
         animView2 = findViewById(R.id.animView2);
         gifOverlay=findViewById(R.id.gifOverlay);
-
+        FirebaseHelper.setEdgeToEdgeInsets(scrollView);
 //        buttonSound = MediaPlayer.create(Activity_Login.this, R.raw.button_sound);
 
         scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

@@ -2,7 +2,9 @@ package com.event.cryptothon3;
 
 import static com.event.cryptothon3.NetworkChecker.isNetworkAvailable;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -48,18 +50,32 @@ public class Activity_welcome_screen extends AppCompatActivity {
     long lastClickTime = 0;
     AlertDialog alertDialog;
     private String currentScore="";
-    private VideoView animView;
 
-//    private MediaPlayer buttonSound;
+    @SuppressLint("HardwareIds")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_welcome_screen);
+        VideoView vv = findViewById(R.id.videoView);
+        deviceId=Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
-    private View gifOverlay;
 
+//        buttonSound = MediaPlayer.create(Activity_welcome_screen.this, R.raw.button_sound);
 
+        vv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(Activity_welcome_screen.this, "DeviceId: " + deviceId,Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+    }
     @Override
     protected void onResume() {
         super.onResume();
         // Video Animation
-        VideoView videoview = (VideoView) findViewById(R.id.videoView);
+        VideoView videoview = findViewById(R.id.videoView);
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.audio_video_of_front_page_animation);
         videoview.setVideoURI(uri);
         videoview.start();
@@ -126,29 +142,30 @@ public class Activity_welcome_screen extends AppCompatActivity {
         if(mFunctions == null)
             mFunctions = FirebaseFunctions.getInstance();
 
+        VideoView videoview = (VideoView) findViewById(R.id.videoView);
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.loading);
+        videoview.setVideoURI(uri);
+        videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
+
+        videoview.start();
+
+
 //        if (buttonSound.isPlaying()) buttonSound.pause();
 //        buttonSound.seekTo(0);
 //        buttonSound.start();
 
-        ImageButton btnOk=findViewById(R.id.btnStart);
+
+        ImageButton btnOk = findViewById(R.id.btnStart);
         TextView btnText=findViewById(R.id.btnText);
-         btnOk.setVisibility(View.GONE);
-         btnText.setVisibility(View.GONE);
+
+        btnOk.setVisibility(View.GONE);
+        btnText.setVisibility(View.GONE);
         btnOk.setEnabled(false);
-        animView.setVisibility(View.VISIBLE);
-        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.loading);
-        animView.setVideoURI(videoUri);
-        animView.start();
-
-        gifOverlay.setVisibility(View.VISIBLE);
-
-     /*   imageViewGif.setVisibility(View.VISIBLE); // Show ImageView
-        gifOverlay.setVisibility(View.VISIBLE);
-        Glide.with(this)
-                .asGif()
-                .load(R.drawable.loading) // Replace with your GIF resource
-                .into(imageViewGif);*/
-
 
         mFunctions = FirebaseFunctions.getInstance();
 
@@ -185,9 +202,6 @@ public class Activity_welcome_screen extends AppCompatActivity {
                                     .addOnCompleteListener(new OnCompleteListener<String>() {
                                         @Override
                                         public void onComplete(@NonNull Task<String> task) {
-
-                                            animView.stopPlayback();
-                                            gifOverlay.setVisibility(View.GONE);
 
                                             if (!task.isSuccessful()) {
                                                 btnOk.setVisibility(View.VISIBLE);
@@ -236,25 +250,6 @@ public class Activity_welcome_screen extends AppCompatActivity {
                 });
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome_screen);
-        VideoView vv = findViewById(R.id.videoView);
-        deviceId=Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        animView = findViewById(R.id.animView2);
-        gifOverlay=findViewById(R.id.gifOverlay);
-
-//        buttonSound = MediaPlayer.create(Activity_welcome_screen.this, R.raw.button_sound);
-
-        vv.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(Activity_welcome_screen.this, "DeviceId: " + deviceId,Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-    }
     public void lblLogoClickShowDeviceId(View view) {
         long clickTime = SystemClock.elapsedRealtime();
 
@@ -326,4 +321,5 @@ public class Activity_welcome_screen extends AppCompatActivity {
         view.findViewById(R.id.txtDialogCancel).setVisibility(View.GONE);
         alertDialog.show();
     }
+
 }
