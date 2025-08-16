@@ -45,7 +45,7 @@ public class Activity_EventState extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eventstate);
 
-        View view = findViewById(R.layout.activity_eventstate);
+        View view = findViewById(R.id.activity_layout_eventstate);
         FirebaseHelper.setEdgeToEdgeInsets(view);
 
         Intent intent = getIntent();

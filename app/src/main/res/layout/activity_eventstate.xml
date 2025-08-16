@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/event_state_wallpaper"
+    android:id="@+id/activity_layout_eventstate"
     tools:context=".Activity_EventState">
 
         <FrameLayout
