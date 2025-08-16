@@ -19,14 +19,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_gravity="center"
+                    android:layout_gravity="top"
                     android:alpha="0.5"
                     android:background="#000000" />
                 <ImageView
                     android:id="@+id/textIcon"
                     android:layout_width="wrap_content"
                     android:contentDescription="@string/cryptothon_title"
-                    android:layout_height="50dp"
+                    android:layout_height="70dp"
                     android:alpha=".9"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/cryptothon_text" />
@@ -34,8 +34,8 @@
 
         <ImageButton
             android:id="@+id/homeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/ic_home"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -72,7 +72,7 @@
             android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="210dp"
-            android:alpha="0.95"
+            android:alpha="0.7"
             android:background="@drawable/dialog_box_dark"
             android:gravity="center_vertical|center_horizontal"
             android:maxLines="3"

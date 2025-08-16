@@ -506,6 +506,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ScrollView scrollView = findViewById(R.id.scrollView);
+        FirebaseHelper.setEdgeToEdgeInsets(scrollView);
+
         mFunctions = FirebaseFunctions.getInstance();
         if(FirebaseHelper.EMULATOR_RUNNING)
             mFunctions.useEmulator("10.0.2.2",5001);
@@ -519,7 +522,6 @@ public class MainActivity extends AppCompatActivity {
 //        buttonSound = MediaPlayer.create(MainActivity.this, R.raw.button_sound);
         wrongAnsSound = MediaPlayer.create(MainActivity.this, R.raw.wrongans_sound);
 
-        ScrollView scrollView = findViewById(R.id.scrollView);
         ImageButton btnSubmit = findViewById(R.id.btnSubmit);
 
         scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
