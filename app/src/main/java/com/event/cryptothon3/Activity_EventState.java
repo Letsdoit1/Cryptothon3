@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,10 @@ public class Activity_EventState extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eventstate);
+
+        View view = findViewById(R.layout.activity_eventstate);
+        FirebaseHelper.setEdgeToEdgeInsets(view);
+
         Intent intent = getIntent();
         String msg = intent.getStringExtra("EVENT_MSG");
         String code = intent.getStringExtra("EVENT_CODE");

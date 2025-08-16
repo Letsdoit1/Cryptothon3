@@ -76,10 +76,11 @@ public class Activity_Login extends AppCompatActivity {
         deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         scrollView = findViewById(R.id.scrollView);
+        FirebaseHelper.setEdgeToEdgeInsets(scrollView);
         ImageButton btnLogin = findViewById(R.id.btnLogin);
         animView2 = findViewById(R.id.animView2);
         gifOverlay=findViewById(R.id.gifOverlay);
-        FirebaseHelper.setEdgeToEdgeInsets(scrollView);
+
 //        buttonSound = MediaPlayer.create(Activity_Login.this, R.raw.button_sound);
 
         scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
