@@ -37,7 +37,7 @@ async function getRankingsUtil() {
         let totalIntervalFromEventStart = currentTime - est;
         let eventCurrentStage = Math.floor(totalIntervalFromEventStart / qri);
         let totalStages = Math.floor(
-            masterSnapshotData.child("questionDetails").numChildren() /
+            masterData.child("questionDetails").numChildren() /
                 maxQuestionReleasePerStage
         );
         eventCurrentStage = Math.min(eventCurrentStage, totalStages - 1);
@@ -68,7 +68,7 @@ async function getRankingsUtil() {
                     .val();
             } else teamScore += baseCumulativeScore;
 
-            rankings.push({ teamScore, teamName, teamCode });
+            rankings.push({ teamScore, teamName });
         });
 
         rankings.sort((a, b) => b.teamScore - a.teamScore);
