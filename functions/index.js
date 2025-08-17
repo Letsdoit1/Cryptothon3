@@ -1,12 +1,3 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
 // import firebase from "firebase/app";
 const { onRequest, onCall } = require("firebase-functions/v2/https");
 const { logger } = require("firebase-functions/v2");
@@ -14,11 +5,9 @@ const { getDatabase } = require("firebase-admin/database");
 const { initializeApp } = require("firebase-admin/app");
 const { Timestamp } = require("firebase-admin/firestore");
 const { onSchedule } = require("firebase-functions/v2/scheduler");
+const { getMessaging } = require("firebase-admin/messaging");
 
 initializeApp();
-
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
 
 exports.getAdmin = onCall(async (req) => {
     try {
@@ -32,6 +21,7 @@ exports.getAdmin = onCall(async (req) => {
 });
 
 async function getRankingsUtil() {
+    let rankings = [];
     try {
         let teams = await getDatabase().ref("/teams").get();
 
@@ -46,6 +36,15 @@ async function getRankingsUtil() {
 
         let totalIntervalFromEventStart = currentTime - est;
         let eventCurrentStage = Math.floor(totalIntervalFromEventStart / qri);
+        let totalStages = Math.floor(
+            masterSnapshotData.child("questionDetails").numChildren() /
+                maxQuestionReleasePerStage
+        );
+        eventCurrentStage = Math.min(eventCurrentStage, totalStages - 1);
+
+        //If last stage keep overall standings shush
+        // if (eventCurrentStage == totalStages - 1) return rankings;
+
         let eventCurrentLevel =
             1 + eventCurrentStage * maxQuestionReleasePerStage;
 
@@ -54,7 +53,6 @@ async function getRankingsUtil() {
             .child(eventCurrentLevel - 1 + "")
             .val();
 
-        let rankings = [];
 
         teams.forEach((team) => {
             let teamCode = team.key;
@@ -122,7 +120,11 @@ async function isValidLevel(level, teamCode, masterSnapshotData) {
 
         let teamCurrentLevel = teamSnapshotData.child("currentLevel").val();
 
-        if (level == teamCurrentLevel && level >= eventCurrentLevel && level < (eventCurrentLevel + maxQuestionReleasePerStage))
+        if (
+            level == teamCurrentLevel &&
+            level >= eventCurrentLevel &&
+            level < eventCurrentLevel + maxQuestionReleasePerStage
+        )
             return true;
         return false;
     } catch (error) {
@@ -245,6 +247,14 @@ exports.unlockHint = onCall(async (req) => {
         await getDatabase().ref(`/teams/${req.data.teamCode}/score`).update({
             teamScore: teamScore,
         });
+
+        //Will notify about unlocked hint to all the fellow teammates
+        /*await getMessaging().send({
+            data: {
+                reload: true
+            },
+            topic: req.data.teamCode
+        });*/
 
         return returnVal;
     } catch (error) {
@@ -418,12 +428,21 @@ exports.checkAnswer = onCall(async (req) => {
             isSuccess = true;
         }
         logger.debug("before calling get question function.");
-        var newQuestion = await getQuestionFunction(teamCode, deviceId);
+        let newQuestion = await getQuestionFunction(teamCode, deviceId);
         newQuestion.isSuccess = isSuccess;
         newQuestion.earlyBird = earlyBird;
         logger.debug(
             "Updated question with Answer msg: " + JSON.stringify(newQuestion)
         );
+
+        //Will notify fellow team mates about the successful submissionx
+        /*await getMessaging().send({
+            data: {
+                reload: true
+            },
+            topic: teamCode
+        });*/
+
         return newQuestion;
     } catch (error) {
         logger.debug("Exception in checkAnswer(): " + error.stack);
@@ -500,7 +519,9 @@ function getEventStateUtil(masterSnapshotData) {
         logger.debug(
             "Getting intervalsSnapshot: " + JSON.stringify(intervalsSnapshot)
         );
-        let noOfIntervals = intervalsSnapshot.numChildren();
+        logger.debug("this is to check wheter deploued");
+        let noOfIntervals =
+            intervalsSnapshot == null ? 0 : intervalsSnapshot.numChildren();
         logger.debug("Number of Block Intervals: " + noOfIntervals);
         for (let i = 0; i < noOfIntervals; i++) {
             let startTime = getDateObjectFromTime(
@@ -524,7 +545,6 @@ function getEventStateUtil(masterSnapshotData) {
             if (currentTime >= startTime && currentTime <= endTime) {
                 let customCode = "EventBlocked";
                 let userMsg = "Event is paused.";
-                console.log("baigan 3");
                 let returnValue = {
                     code: customCode,
                     msg: userMsg,
@@ -539,7 +559,6 @@ function getEventStateUtil(masterSnapshotData) {
                 return returnValue;
             }
         }
-        // logger.debug("Temp 5");
         return null; // if everything is fine then return null
     } catch (error) {
         logger.debug("Exception is getEventStateUtil(): " + error.stack);
@@ -574,11 +593,12 @@ exports.getEventState = onCall(async (req) => {
         );
 
         let eventState = getEventStateUtil(masterSnapshotData);
+        logger.debug("the value came for event state " + eventState);
         if (eventState != null) {
             eventState.teamScore = currentTeamScore;
             return eventState;
         }
-
+        
         return {
             code: "EventRunning",
             msg: "Event is on",
@@ -674,8 +694,9 @@ async function getQuestionFunction(teamCode, deviceId) {
         let qrt = new Date(est.valueOf() + Number(eventCurrentStage * qri));
 
         //if last stage available time should be according to event end time
-        if (eventCurrentStage == totalStages - 1)
+        if (eventCurrentStage == totalStages - 1){
             availableTime = eet - currentTime;
+        }
         else availableTime = qri - (currentTime - qrt);
 
         //assuming integer me hoge stages like 7days not 7.5days
@@ -687,7 +708,10 @@ async function getQuestionFunction(teamCode, deviceId) {
         let intervalsSnapshot = masterSnapshotData.child("blockIntervals");
         let noOfIntervals = intervalsSnapshot.numChildren();
 
-        logger.info("mm1", (availableTime/(1000*60*60)));
+        logger.info("mm1", availableTime / (1000 * 60 * 60));
+
+
+        //In this part we are removing the blockage time (blockIntervals tiime) from the total available time
 
         //if extra time has no blockage then comment out if part
         if (eventCurrentStage == totalStages - 1) {
@@ -707,9 +731,7 @@ async function getQuestionFunction(teamCode, deviceId) {
 
                 logger.info("mm2", stday, enday);
 
-
                 for (; stday <= enday; stday++) {
-
                     currentTimeTempDay.setDate(stday);
                     logger.info("ss0: ", stday, enday, currentTimeTempDay);
 
@@ -727,12 +749,19 @@ async function getQuestionFunction(teamCode, deviceId) {
                             startTime > currentTimeTempDay &&
                             startTime < nextStageStarts
                         ) {
-                            logger.info("checker1", availableTime/(1000*60*60));
+                            logger.info(
+                                "checker1",
+                                availableTime / (1000 * 60 * 60)
+                            );
                             logger.info("sss", startTime, endTime);
                             if (endTime < nextStageStarts)
                                 availableTime -= endTime - startTime;
                             else availableTime -= nextStageStarts - startTime;
-                            logger.info("checker2", (endTime - startTime)/(1000*60*60), availableTime/(1000*60*60))
+                            logger.info(
+                                "checker2",
+                                (endTime - startTime) / (1000 * 60 * 60),
+                                availableTime / (1000 * 60 * 60)
+                            );
                         }
                     }
 
@@ -933,7 +962,8 @@ async function getQuestionFunction(teamCode, deviceId) {
 }
 
 exports.getQuestion = onCall(async (req) => {
-    return getQuestionFunction(req.data.teamCode, req.data.deviceId);
+    let question = await getQuestionFunction(req.data.teamCode, req.data.deviceId);
+    return question;
 });
 
 exports.checkPwdAndRegister = onCall(async (req) => {
@@ -1090,4 +1120,24 @@ exports.isRegisteredDevice = onCall(async (req) => {
         registrationStatus: registrationStatus,
         teamPassword: teamCode,
     };
+});
+
+exports.addQuestion = onCall(async (req) => {
+    try {
+        const question = {
+            answer: req.data.answer,
+            earlyBird: {
+                answered: false,
+            },
+            hint: req.data.hint,
+            questionText: req.data.questionText,
+        };
+
+        await getDatabase().ref(`/master/questionDetails/${req.data.level}`).set(question);
+
+        return { question };
+    } catch (error) {
+        logger.debug("Exception in addQuestion(): " + error.stack);
+        return error;
+    }
 });
