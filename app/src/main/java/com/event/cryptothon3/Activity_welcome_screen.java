@@ -226,6 +226,7 @@ public class Activity_welcome_screen extends AppCompatActivity {
                                                 intent.putExtra("EVENT_MSG", msg);
                                                 intent.putExtra("Available_Time",availableTime);
                                                 intent.putExtra("Team_Score",currentScore);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                                 startActivity(intent);
                                                 finish();
                                                 return;
@@ -234,16 +235,17 @@ public class Activity_welcome_screen extends AppCompatActivity {
                                             if(teamPwd!=null){
                                                 Intent intent = new Intent(Activity_welcome_screen.this, MainActivity.class);
                                                 intent.putExtra("TEAM_CODE",teamPwd);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                                 startActivity(intent);
                                                 finish();
                                             } else {
-                                                startActivity(new Intent(Activity_welcome_screen.this, Activity_Login.class));
+                                                startActivity(new Intent(Activity_welcome_screen.this, Activity_Login.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                                                 finish();
                                             }
                                         }
                                     });
                         }else{
-                            startActivity(new Intent(Activity_welcome_screen.this, Activity_Login.class));
+                            startActivity(new Intent(Activity_welcome_screen.this, Activity_Login.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             finish();
                         }
                     }
@@ -315,7 +317,7 @@ public class Activity_welcome_screen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish(); // Close error activity
-                startActivity(new Intent(Activity_welcome_screen.this, Activity_welcome_screen.class));
+                startActivity(new Intent(Activity_welcome_screen.this, Activity_welcome_screen.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
             }
         });
         view.findViewById(R.id.txtDialogCancel).setVisibility(View.GONE);

@@ -199,6 +199,7 @@ public class Activity_Login extends AppCompatActivity {
                             intent.putExtra("EVENT_MSG", msg);
                             intent.putExtra("Available_Time",availableTime);
                             intent.putExtra("Team_Score",currentScore);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
                             finish();
                             return;
@@ -212,6 +213,7 @@ public class Activity_Login extends AppCompatActivity {
                         } else if (rd.isRegisteredSuccessfully()) {
                             Intent intent = new Intent(Activity_Login.this, MainActivity.class);
                             intent.putExtra("TEAM_CODE", pwd);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
                             finish();
                         } else {
@@ -369,7 +371,7 @@ public class Activity_Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish(); // Close error activity
-                startActivity(new Intent(Activity_Login.this, Activity_welcome_screen.class));
+                startActivity(new Intent(Activity_Login.this, Activity_welcome_screen.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
             }
         });
         view.findViewById(R.id.txtDialogCancel).setVisibility(View.GONE);

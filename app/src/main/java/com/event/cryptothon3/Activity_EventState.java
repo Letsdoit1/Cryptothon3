@@ -83,6 +83,7 @@ public class Activity_EventState extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Activity_EventState.this, Activity_welcome_screen.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
@@ -143,6 +144,7 @@ public class Activity_EventState extends AppCompatActivity {
             }
             public void onFinish() {
                 Intent intent = new Intent(Activity_EventState.this, Activity_welcome_screen.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }

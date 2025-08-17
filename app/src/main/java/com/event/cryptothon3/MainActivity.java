@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("Available_Time",availableTime);
 //                            intent.putExtra("Team_Name",questionData.getTeamName());
                             intent.putExtra("Team_Score",currentScore);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
                             finish();
                             return;
@@ -318,6 +319,7 @@ public class MainActivity extends AppCompatActivity {
                                             intent.putExtra("Available_Time",availableTime);
 //                                            intent.putExtra("Team_Name",questionData.getTeamName());
                                             intent.putExtra("Team_Score",currentScore);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                             startActivity(intent);
                                             finish();
                                         }
@@ -347,6 +349,7 @@ public class MainActivity extends AppCompatActivity {
                                     intent.putExtra("Available_Time",availableTime);
 //                                    intent.putExtra("Team_Name",questionData.getTeamName());
                                     intent.putExtra("Team_Score",currentScore);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                     startActivity(intent);
                                     finish();
                                     return;
@@ -655,6 +658,7 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("Available_Time",availableTime);
 //                            intent.putExtra("Team_Name",questionData.getTeamName());
                             intent.putExtra("Team_Score",currentScore);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
                             finish();
                         }else {
@@ -796,7 +800,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish(); // Close error activity
-                startActivity(new Intent(MainActivity.this, Activity_welcome_screen.class));
+                startActivity(new Intent(MainActivity.this, Activity_welcome_screen.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
             }
         });
         view.findViewById(R.id.txtDialogCancel).setVisibility(View.GONE);
