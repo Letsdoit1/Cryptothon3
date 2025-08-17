@@ -490,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
         mCounter = new CountDownTimer(countdown, tick) {
             public void onTick(long millisUntilFinished) {
                 NumberFormat f = new DecimalFormat("00");
-                long hour = (millisUntilFinished / 3600000) % 24;
+                long hour = (millisUntilFinished / 3600000);
                 long min = (millisUntilFinished / 60000) % 60;
                 long sec = (millisUntilFinished / 1000) % 60;
                 ((TextView)findViewById(R.id.lblTimer)).setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));

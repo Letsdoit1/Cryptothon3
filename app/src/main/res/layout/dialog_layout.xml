@@ -12,7 +12,7 @@
         android:layout_marginTop="30dp"
         android:layout_height="150dp"
         android:alpha="0.95"
-        android:background="@drawable/dialog_box"
+        android:background="@drawable/dialog_box_dark"
         android:gravity="center_vertical|center_horizontal"
         android:maxLines="3"
         android:paddingTop="15dp"
@@ -25,7 +25,7 @@
         android:shadowDy="0"
         android:shadowRadius="30"
         android:text=""
-        android:textColor="#FFEB3B"
+        android:textColor="#ffff00"
         android:textSize="24sp"
         android:textStyle="bold"
         tools:scrollable="true" />
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/main_logo_2" />
+        android:src="@drawable/logo" />
     <FrameLayout
         android:id="@+id/layoutBtn"
         android:layout_marginTop="20dp"
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ok"
-            android:textColor="#dddddd"
+            android:textColor="#3355ff"
             android:textSize="30sp"
             android:layout_gravity="center"
             android:clickable="false"

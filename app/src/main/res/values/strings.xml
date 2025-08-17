@@ -24,4 +24,5 @@
     <string name="restart">Restart</string>
     <string name="error">Error, check internet stability.</string>
     <string name="internet_notavailable">Internet unstable / unavailable</string>
+    <string name="home_button">Home Button</string>
 </resources>

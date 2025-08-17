@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -62,7 +63,6 @@ public class Activity_Login extends AppCompatActivity {
 
 //    private MediaPlayer buttonSound;
 
-    private View gifOverlay;
     private String currentScore = "";
 
     @Override
@@ -79,7 +79,6 @@ public class Activity_Login extends AppCompatActivity {
         FirebaseHelper.setEdgeToEdgeInsets(scrollView);
         ImageButton btnLogin = findViewById(R.id.btnLogin);
         animView2 = findViewById(R.id.animView2);
-        gifOverlay=findViewById(R.id.gifOverlay);
 
 //        buttonSound = MediaPlayer.create(Activity_Login.this, R.raw.button_sound);
 
@@ -118,6 +117,7 @@ public class Activity_Login extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
+        animView2.setVisibility(View.GONE);
         findViewById(R.id.btnLogin).setEnabled(true);
         // Animation for login button
         FrameLayout flLoginButton = findViewById(R.id.layoutBtn);
@@ -160,28 +160,26 @@ public class Activity_Login extends AppCompatActivity {
 
 
         animView2.setVisibility(View.VISIBLE);
-        gifOverlay.setVisibility(View.VISIBLE);
         Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.loading);
         animView2.setVideoURI(videoUri);
+        animView2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
         animView2.start();
 
 
        // findViewById(R.id.layoutBtn).setVisibility(View.GONE);
         findViewById(R.id.btnLogin).setEnabled(false);
 
-      /*  animView2.setVisibility(View.VISIBLE); // Show ImageView
-        gifOverlay.setVisibility(View.VISIBLE);
-        Glide.with(this)
-                .asGif()
-                .load(R.drawable.loading) // Replace with your GIF resource
-                .into(imageViewGif);*/
         checkPwdAndRegister(deviceId, pwd)
                 .addOnCompleteListener(new OnCompleteListener<RegistrationDetails>() {
                     @Override
                     public void onComplete(@NonNull Task<RegistrationDetails> task) {
 
                         animView2.setVisibility(View.GONE);
-                        gifOverlay.setVisibility(View.GONE);
                         if (!task.isSuccessful()) {
 
                             Exception e = task.getException();

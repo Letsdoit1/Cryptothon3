@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="1dp"
             android:gravity="center"
             app:layout_constraintBottom_toTopOf="@+id/hintUI"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,21 +63,6 @@
                 android:layout_gravity="center"
                 android:indeterminate="true" />
 
-            <!--        <com.google.android.material.textfield.TextInputLayout-->
-            <!--            android:id="@+id/timer"-->
-            <!--            android:layout_width="150dp"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_toEndOf="@id/teamname"-->
-            <!--            android:hint="Timer"-->
-            <!--            android:layout_marginLeft="50px"-->
-            <!--            >-->
-
-            <!--            <com.google.android.material.textfield.TextInputEditText-->
-            <!--                android:layout_width="150dp"-->
-            <!--                android:layout_height="wrap_content" />-->
-
-            <!--        </com.google.android.material.textfield.TextInputLayout>-->
-
 
             <TextView
                 android:id="@+id/lblTimer"
@@ -87,34 +72,8 @@
                 android:layout_toEndOf="@id/teamname"
                 android:gravity="end"
                 android:text="@string/_00_00_00"
-                android:textColor="#F4C2C2"
+                android:textColor="#ffff00"
                 android:textSize="25sp" />
-
-<!--            <ImageView-->
-<!--                android:id="@+id/gif"-->
-<!--                android:layout_width="70dp"-->
-<!--                android:layout_height="250dp"-->
-<!--                android:layout_below="@id/lblTimer"-->
-<!--                android:layout_alignRight="@id/lblLevel"-->
-<!--                android:layout_alignParentEnd="true" />-->
-
-
-            <!--        <com.google.android.material.textfield.TextInputLayout-->
-            <!--            android:id="@+id/teamname"-->
-            <!--            android:layout_width="150dp"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            >-->
-
-            <!--            <com.google.android.material.textfield.TextInputEditText-->
-
-            <!--                android:id="@+id/teamnameText"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:enabled="false"-->
-            <!--                android:focusable="false"-->
-            <!--                android:textColor="#FFFFFF" />-->
-
-            <!--        </com.google.android.material.textfield.TextInputLayout>-->
 
             <TextView
                 android:id="@+id/teamname"
@@ -133,6 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/teamname"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="HINT"
                 android:textColor="#ffffff"
@@ -143,30 +103,12 @@
                 android:layout_width="199dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/teamname"
+                android:layout_marginTop="10dp"
                 android:layout_alignParentEnd="true"
                 android:gravity="end"
                 android:text=""
                 android:textColor="#ffffff"
                 android:textSize="24sp" />
-
-            <!--        <com.google.android.material.textfield.TextInputLayout-->
-            <!--            android:id="@+id/ranking"-->
-            <!--            android:layout_width="150dp"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_below="@id/teamname"-->
-            <!--            android:hint="Ranking"-->
-            <!--            app:hintTextColor="#FFFFFF"-->
-            <!--            >-->
-
-            <!--            <com.google.android.material.textfield.TextInputEditText-->
-            <!--                android:id="@+id/rankingText"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:enabled="false"-->
-            <!--                android:focusable="false"-->
-            <!--                android:textColor="#FFFFFF" />-->
-
-            <!--        </com.google.android.material.textfield.TextInputLayout>-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/question"
@@ -199,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/question"
                 android:hint="@string/answer"
-                android:textColorHint="#ffffff"
+                android:textColorHint="#777777"
                 app:counterTextColor="@color/white"
                 app:counterEnabled="true"
                 app:counterMaxLength="10"
@@ -326,7 +268,7 @@
         <VideoView
             android:id="@+id/videoView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
