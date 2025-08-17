@@ -4,6 +4,7 @@ import static com.event.cryptothon3.NetworkChecker.isNetworkAvailable;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -76,6 +77,7 @@ public class Activity_welcome_screen extends AppCompatActivity {
         super.onResume();
         // Video Animation
         VideoView videoview = findViewById(R.id.videoView);
+        videoview.setAudioFocusRequest(AudioManager.AUDIOFOCUS_NONE);
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.audio_video_of_front_page_animation);
         videoview.setVideoURI(uri);
         videoview.start();
@@ -143,6 +145,7 @@ public class Activity_welcome_screen extends AppCompatActivity {
             mFunctions = FirebaseFunctions.getInstance();
 
         VideoView videoview = (VideoView) findViewById(R.id.videoView);
+        videoview.setAudioFocusRequest(AudioManager.AUDIOFOCUS_NONE);
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.loading);
         videoview.setVideoURI(uri);
         videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {

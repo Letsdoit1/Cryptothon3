@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -326,6 +327,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                                 Uri uri;
+                                videoview.setAudioFocusRequest(AudioManager.AUDIOFOCUS_NONE);
                                 if(questionData.getEarlyBird())
                                     uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.early_bird_winner);
                                 else

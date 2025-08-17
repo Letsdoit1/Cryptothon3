@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -160,6 +161,7 @@ public class Activity_Login extends AppCompatActivity {
 
 
         animView2.setVisibility(View.VISIBLE);
+        animView2.setAudioFocusRequest(AudioManager.AUDIOFOCUS_NONE);
         Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.loading);
         animView2.setVideoURI(videoUri);
         animView2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
