@@ -52,6 +52,8 @@ public class Activity_welcome_screen extends AppCompatActivity {
     AlertDialog alertDialog;
     private String currentScore="";
 
+    VideoView videoview;
+
     @SuppressLint("HardwareIds")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,13 @@ public class Activity_welcome_screen extends AppCompatActivity {
         videoview.setAudioFocusRequest(AudioManager.AUDIOFOCUS_NONE);
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.audio_video_of_front_page_animation);
         videoview.setVideoURI(uri);
+        videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                // This method is called when the video playback is complete
+                videoview.stopPlayback(); // Stop the VideoView
+            }
+        });
         videoview.start();
         // Button Animation
         FrameLayout flStartButton = findViewById(R.id.layoutBtn);
@@ -144,7 +153,7 @@ public class Activity_welcome_screen extends AppCompatActivity {
         if(mFunctions == null)
             mFunctions = FirebaseFunctions.getInstance();
 
-        VideoView videoview = (VideoView) findViewById(R.id.videoView);
+        videoview = (VideoView) findViewById(R.id.videoView);
         videoview.setAudioFocusRequest(AudioManager.AUDIOFOCUS_NONE);
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.loading);
         videoview.setVideoURI(uri);
@@ -154,7 +163,13 @@ public class Activity_welcome_screen extends AppCompatActivity {
                 mp.setLooping(true);
             }
         });
-
+        videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                // This method is called when the video playback is complete
+                videoview.stopPlayback(); // Stop the VideoView
+            }
+        });
         videoview.start();
 
 
@@ -327,4 +342,19 @@ public class Activity_welcome_screen extends AppCompatActivity {
         alertDialog.show();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (videoview != null && videoview.isPlaying()) {
+            videoview.pause();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (videoview != null) {
+            videoview.stopPlayback();
+        }
+    }
 }
