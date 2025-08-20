@@ -279,6 +279,9 @@ exports.checkAnswer = onCall(async (req) => {
         let currentTeamScore;
         let teamSnapshotData;
 
+        logger.debug("data received");
+        logger.debug(req.data);
+
         await getDatabase().ref("/master").get().then(async (masterSnapshot) => {
             masterSnapshotData = masterSnapshot;
         });
