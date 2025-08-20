@@ -371,14 +371,24 @@ exports.checkAnswer = onCall(async (req) => {
 
                 let hintUsed = false;
                 if (teamData && teamData.scoreCard && teamData.scoreCard[level]) hintUsed = teamData.scoreCard[level].hintUsed;
-                teamDataNew.scoreCard = {
-                    [level]: {
+                if (teamData && teamData.scoreCard){
+                    teamDataNew.scoreCard[level] = {
                         hintUsed: hintUsed,
                         isSuccess: true,
                         time: time,
                         deviceId: deviceId,
-                    }
-                };
+                    };
+                }
+                else {
+                    teamDataNew.scoreCard = {
+                        [level]: {
+                            hintUsed: hintUsed,
+                            isSuccess: true,
+                            time: time,
+                            deviceId: deviceId,
+                        }
+                    };
+                }
 
                 if (earlyBird) {
                     if (scoreRules.earlyBirdScore != 0)
