@@ -279,25 +279,16 @@ exports.checkAnswer = onCall(async (req) => {
         let currentTeamScore;
         let teamSnapshotData;
 
-        await getDatabase()
-            .ref("/master")
-            .get()
-            .then(async (masterSnapshot) => {
-                masterSnapshotData = masterSnapshot;
-            });
+        await getDatabase().ref("/master").get().then(async (masterSnapshot) => {
+            masterSnapshotData = masterSnapshot;
+        });
 
         // Read all team data
-        await getDatabase()
-            .ref(`/teams/${req.data.teamCode}`)
-            .get()
-            .then((teamSnapshot) => {
-                teamSnapshotData = teamSnapshot;
-            });
+        await getDatabase().ref(`/teams/${teamCode}`).get().then((teamSnapshot) => {
+            teamSnapshotData = teamSnapshot;
+        });
 
-        currentTeamScore = getCurrentScore(
-            masterSnapshotData,
-            teamSnapshotData
-        );
+        currentTeamScore = getCurrentScore(masterSnapshotData, teamSnapshotData);
 
         let eventState = getEventStateUtil(masterSnapshotData);
         if (eventState != null) {
@@ -305,11 +296,7 @@ exports.checkAnswer = onCall(async (req) => {
             return eventState;
         }
 
-        let validLevel = await isValidLevel(
-            level,
-            teamCode,
-            masterSnapshotData
-        );
+        let validLevel = await isValidLevel(level, teamCode, masterSnapshotData);
 
         if (validLevel == false) {
             return {
@@ -319,112 +306,147 @@ exports.checkAnswer = onCall(async (req) => {
                 time: null,
             };
         }
-        // await getDatabase()
-        //     .ref("/master/scoreRules")
-        //     .get()
-        //     .then(async (scoreRulesSnapshot) => {
-        //         scoreRules = scoreRulesSnapshot.val();
-        //     });
 
         scoreRules = masterSnapshotData.child("scoreRules").val();
+        score = teamSnapshotData.child("score").val();
 
-        await getDatabase()
-            .ref(`/teams/${teamCode}/score`)
-            .get()
-            .then(async (scoreSnapshot) => {
-                score = scoreSnapshot.val();
-            });
-
-        // await getDatabase()
-        //     .ref(`/master/questionDetails/${level}`)
-        //     .get()
-        //     .then(async (queSnapshot) => {
-        //         queSnapshot = queSnapshot.val();
-        //         realAns = queSnapshot.answer.toLowerCase();
-        //         if (queSnapshot.earlyBird.answered == false) {
-        //             earlyBird = true;
-        //         }
-        //     });
-
-        let queSnapshot = masterSnapshotData
-            .child("questionDetails")
-            .child(`${level}`);
+        let queSnapshot = masterSnapshotData.child("questionDetails").child(`${level}`);
         realAns = queSnapshot.child("answer").val().toLowerCase();
-        if (queSnapshot.child("earlyBird").child("answered").val() == false) {
-            earlyBird = true;
-        }
+
+
+        // if (queSnapshot.child("earlyBird").child("answered").val() == false) {
+        //     earlyBird = true;
+        // }
 
         if (realAns === ans.toLowerCase()) {
             logger.debug("Answer correct");
 
             // If early bird then save detailes master data of question
-            if (earlyBird) {
-                await getDatabase()
-                    .ref(`/master/questionDetails/${level}/earlyBird`)
-                    .update({
-                        answered: true,
-                        teamCode: teamCode,
-                        deviceId: deviceId,
-                        time: time,
-                    });
-            }
+            await getDatabase().ref(`/master/questionDetails/${level}/earlyBird`).transaction((earlyBirdData) => {
+                if (earlyBirdData && earlyBirdData.answered === true) {
+                    return earlyBirdData;
+                }
+                return {
+                    answered: true,
+                    teamCode,
+                    deviceId,
+                    time,
+                };
+            }, (error, commited, snapshot) => {
+                if (error){
+                    logger.debug("Exception in checkAnswer(): " + error.stack);
+                    return error;
+                }
+                else if (commited && snapshot.val().teamCode === teamCode){
+                    logger.debug("data commited");
+                    earlyBird = true;
+                }
+            });
+
+            // if (earlyBird) {
+            //     await getDatabase()
+            //         .ref(`/master/questionDetails/${level}/earlyBird`)
+            //         .update({
+            //             answered: true,
+            //             teamCode: teamCode,
+            //             deviceId: deviceId,
+            //             time: time,
+            //         });
+            // }
 
             // Update team score as per hint and early bird
-            await getDatabase()
-                .ref(`/teams/${teamCode}/scoreCard/${level}`)
-                .get()
-                .then(async (scoreCardSnapshot) => {
-                    let hintUsed = false;
-                    let teamScore = scoreRules.successfulScale * level;
-                    let negativeScoreBalancer =
-                        scoreRules.unsuccessfulScale * level;
-                    // To get old value to hint used in existing score card if any
-                    if (scoreCardSnapshot.exists()) {
-                        logger.debug(
-                            "scoreCard exists: " +
-                                JSON.stringify(scoreCardSnapshot)
-                        );
-                        hintUsed = scoreCardSnapshot.val().hintUsed;
-                        // if (hintUsed) {
-                        //     // teamScore -= scoreRules.hintScale * level;
-                        // }
-                    } else {
-                        logger.debug("scorecard does not exist: creating one");
+            await getDatabase().ref(`/teams/${teamCode}`).transaction((teamData) => {
+                if (teamData && teamData.currentLevel > level){
+                    return teamData;
+                }
+                if (teamData === null) return {};
+                let teamScore = scoreRules.successfulScale * level;
+                let negativeScoreBalancer = scoreRules.unsuccessfulScale * level;
+                let teamDataNew = teamData;
+
+                teamDataNew.currentLevel = level + 1;
+                teamDataNew.scoreCard = {
+                    [level]: {
+                        hintUsed: false,
+                        isSuccess: true,
+                        time: time,
+                        deviceId: deviceId,
                     }
+                };
 
-                    if (earlyBird) {
-                        if (scoreRules.earlyBirdScore != 0)
-                            teamScore += scoreRules.earlyBirdScore;
-                        else teamScore += scoreRules.earlyBirdScale * level;
-                    }
+                if (earlyBird) {
+                    if (scoreRules.earlyBirdScore != 0)
+                        teamScore += scoreRules.earlyBirdScore;
+                    else teamScore += scoreRules.earlyBirdScale * level;
+                }
+                teamDataNew.score = {
+                    teamScore: score.teamScore + teamScore,
+                    negativeScoreBalancer: score.negativeScoreBalancer + negativeScoreBalancer,
+                };
+                
+                return teamDataNew;
+            });
 
-                    // Update question score card in team
-                    await getDatabase()
-                        .ref(`/teams/${teamCode}/scoreCard/${level}`)
-                        .update({
-                            hintUsed: hintUsed,
-                            isSuccess: true,
-                            time: time,
-                            deviceId: deviceId,
-                        });
+            // await getDatabase()
+            //     .ref(`/teams/${teamCode}/scoreCard/${level}`)
+            //     .get()
+            //     .then(async (scoreCardSnapshot) => {
+            //         let hintUsed = false;
+            //         let teamScore = scoreRules.successfulScale * level;
+            //         let negativeScoreBalancer =
+            //             scoreRules.unsuccessfulScale * level;
+            //         // To get old value to hint used in existing score card if any
+            //         //done
+            //         if (scoreCardSnapshot.exists()) {
+            //             logger.debug(
+            //                 "scoreCard exists: " +
+            //                     JSON.stringify(scoreCardSnapshot)
+            //             );
+            //             hintUsed = scoreCardSnapshot.val().hintUsed;
+            //             // if (hintUsed) {
+            //             //     // teamScore -= scoreRules.hintScale * level;
+            //             // }
+            //         } else {
+            //             logger.debug("scorecard does not exist: creating one");
+            //         }
 
-                    // Update total team score and negative score balancer
-                    await getDatabase()
-                        .ref(`/teams/${teamCode}/score`)
-                        .update({
-                            teamScore: score.teamScore + teamScore,
-                            negativeScoreBalancer:
-                                score.negativeScoreBalancer +
-                                negativeScoreBalancer,
-                        });
+            //         //done
+            //         if (earlyBird) {
+            //             if (scoreRules.earlyBirdScore != 0)
+            //                 teamScore += scoreRules.earlyBirdScore;
+            //             else teamScore += scoreRules.earlyBirdScale * level;
+            //         }
 
-                    // Update team level to next question
-                    await getDatabase()
-                        .ref(`/teams/${teamCode}`)
-                        .update({
-                            currentLevel: level + 1,
-                        });
-                });
+            //         // Update question score card in team
+            //         //done
+            //         await getDatabase()
+            //             .ref(`/teams/${teamCode}/scoreCard/${level}`)
+            //             .update({
+            //                 hintUsed: hintUsed,
+            //                 isSuccess: true,
+            //                 time: time,
+            //                 deviceId: deviceId,
+            //             });
+
+            //         // Update total team score and negative score balancer
+            //         //done
+            //         await getDatabase()
+            //             .ref(`/teams/${teamCode}/score`)
+            //             .update({
+            //                 teamScore: score.teamScore + teamScore,
+            //                 negativeScoreBalancer:
+            //                     score.negativeScoreBalancer +
+            //                     negativeScoreBalancer,
+            //             });
+
+            //         // Update team level to next question
+            //         //done
+            //         await getDatabase()
+            //             .ref(`/teams/${teamCode}`)
+            //             .update({
+            //                 currentLevel: level + 1,
+            //             });
+            //     });
             isSuccess = true;
         }
         logger.debug("before calling get question function.");
@@ -436,12 +458,12 @@ exports.checkAnswer = onCall(async (req) => {
         );
 
         //Will notify fellow team mates about the successful submissionx
-        /*await getMessaging().send({
-            data: {
-                reload: true
-            },
-            topic: teamCode
-        });*/
+        // await getMessaging().send({
+        //     data: {
+        //         reload: true
+        //     },
+        //     topic: teamCode
+        // });
 
         return newQuestion;
     } catch (error) {
