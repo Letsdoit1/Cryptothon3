@@ -368,9 +368,12 @@ exports.checkAnswer = onCall(async (req) => {
                 let teamDataNew = teamData;
 
                 teamDataNew.currentLevel = level + 1;
+
+                let hintUsed = false;
+                if (teamData && teamData.scoreCard && teamData.scoreCard[level]) hintUsed = teamData.scoreCard[level].hintUsed;
                 teamDataNew.scoreCard = {
                     [level]: {
-                        hintUsed: false,
+                        hintUsed: hintUsed,
                         isSuccess: true,
                         time: time,
                         deviceId: deviceId,
