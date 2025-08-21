@@ -683,14 +683,29 @@ async function getQuestionFunction(teamCode, deviceId) {
         );
 
         // Read all team data
+        let errorOccured = false;
         await getDatabase()
             .ref(`/teams/${teamCode}`)
             .get()
             .then((teamSnapshot) => {
-                teamSnapshotData = teamSnapshot;
-                teamName = teamSnapshotData.child("teamName").val();
+                if (!teamSnapshot.exists() || teamSnapshot.child("teamName").val() === null){
+                    errorOccured = true; 
+                }
+                else {
+                    teamSnapshotData = teamSnapshot;
+                    teamName = teamSnapshotData.child("teamName").val();
+                    logger.debug("teamSnapshotData: " + JSON.stringify(teamSnapshotData));
+                }
             });
-        // logger.debug("teamSnapshotData: " + JSON.stringify(teamSnapshotData));
+        if (errorOccured){
+            return {
+                code: "InvalidLevel",
+                msg: "Something went wrong. Please try again!",
+                teamScore: 0,
+                time: null,
+            };
+        }
+
         currentTeamScore = getCurrentScore(
             masterSnapshotData,
             teamSnapshotData
