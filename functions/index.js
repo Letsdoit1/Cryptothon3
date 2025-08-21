@@ -286,10 +286,33 @@ exports.checkAnswer = onCall(async (req) => {
             masterSnapshotData = masterSnapshot;
         });
 
+//        // Read all team data
+//        await getDatabase().ref(`/teams/${teamCode}`).get().then((teamSnapshot) => {
+//            teamSnapshotData = teamSnapshot;
+//        });
+
         // Read all team data
-        await getDatabase().ref(`/teams/${teamCode}`).get().then((teamSnapshot) => {
-            teamSnapshotData = teamSnapshot;
-        });
+        let errorOccured = false;
+        await getDatabase()
+            .ref(`/teams/${teamCode}`)
+            .get()
+            .then((teamSnapshot) => {
+                if (!teamSnapshot.exists() || teamSnapshot.child("teamName").val() === null){
+                    errorOccured = true;
+                }
+                else {
+                    teamSnapshotData = teamSnapshot;
+                    logger.debug("teamSnapshotData in CheckAnswer: " + JSON.stringify(teamSnapshotData));
+                }
+            });
+        if (errorOccured){
+            return {
+                code: "InvalidLevel",
+                msg: "Something went wrong. Please try again!",
+                teamScore: 0,
+                time: null,
+            };
+        }
 
         currentTeamScore = getCurrentScore(masterSnapshotData, teamSnapshotData);
 
