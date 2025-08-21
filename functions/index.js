@@ -688,7 +688,7 @@ async function getQuestionFunction(teamCode, deviceId) {
             .ref(`/teams/${teamCode}`)
             .get()
             .then((teamSnapshot) => {
-                if (!teamSnapshot.exists() || teamSnapshotData.child("teamName").val() === null){
+                if (!teamSnapshot.exists() || teamSnapshot.child("teamName").val() === null){
                     errorOccured = true; 
                 }
                 else {
@@ -705,7 +705,7 @@ async function getQuestionFunction(teamCode, deviceId) {
                 time: null,
             };
         }
-        
+
         currentTeamScore = getCurrentScore(
             masterSnapshotData,
             teamSnapshotData
